@@ -7,23 +7,11 @@ from io import BytesIO
 from streamlit.components.v1 import html
 from datetime import datetime
 
-# ---------- 新增辅助函数 ----------
-def get_file_creation_time(file_path):
-    """获取文件创建时间并返回datetime对象"""
-    if os.path.exists(file_path):
-        ctime = os.path.getctime(file_path)
-        return datetime.fromtimestamp(ctime)
-    else:
-        return None
-
 def update_database_from_latest(latest_file, db_file):
     """
     读取最新读数文件，匹配ID并追加到数据库对应工作表中。
     返回更新后的数据库字典和最新读数DataFrame。
     """
-    # 获取最新文件创建时间
-    pws_file_create_time = get_file_creation_time(latest_file)
-    
     # 读取最新读数文件
     latest_df = pd.read_excel(latest_file, sheet_name=0)
     # 确保列名正确（根据示例文件，列名为uploadTime, ID, SensorTotalLength, SensorCurrentLength）
@@ -32,42 +20,7 @@ def update_database_from_latest(latest_file, db_file):
     # 读取数据库所有工作表
     xls = pd.ExcelFile(db_file)
     db_dict = pd.read_excel(xls, sheet_name=None)
-    
-    # 遍历最新读数的每一行
-    for _, row in latest_df.iterrows():
-        latest_id = str(row['ID']).strip()
-        upload_time = row['uploadTime']
-        total_len = row['SensorTotalLength']
-        current_len = row['SensorCurrentLength']
-        wear = total_len - current_len  # 计算磨损量
-        
-        # 查找匹配的sheet（后三位ID）
-        matched_sheet = None
-        for sheet_name in db_dict.keys():
-            sheet_id = sheet_name[-3:]  # 取后三位作为ID
-            if sheet_id == latest_id:
-                matched_sheet = sheet_name
-                break
-        
-        if matched_sheet is not None:
-            # 构建新行数据
-            new_row = pd.DataFrame([{
-                'ServerUpdateTime': pws_file_create_time,
-                'SensorScanTime': upload_time,
-                'InitialThickness': total_len,
-                'CurrentThickness': current_len,
-                'Wear': wear
-            }])
-            # 追加到对应sheet
-            db_dict[matched_sheet] = pd.concat([db_dict[matched_sheet], new_row], ignore_index=True)
-        else:
-            st.info(f"Received data with ID {latest_id} !")
-    
-    # 将更新后的字典写回数据库文件（覆盖）
-    with pd.ExcelWriter(db_file, engine='openpyxl') as writer:
-        for sheet_name, df in db_dict.items():
-            df.to_excel(writer, sheet_name=sheet_name, index=False)
-    
+
     return db_dict, latest_df
 
 def get_latest_sensor_status(db_dict):

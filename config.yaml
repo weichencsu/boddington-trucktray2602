@@ -1,0 +1,29 @@
+cookie:
+  expiry_days: 0
+  key: some_signature_key
+  name: some_cookie_name
+credentials:
+  usernames:
+    rowan.melrose@bisalloy.com.au:
+      email: rowan.melrose@bisalloy.com.au
+      name: Rowan Melrose
+      password: $2b$12$3bDi1T.MB/q8y5TIhVbijupsEuO9QWFt3DsgB9xxZLOHvyPwDYwu2
+    wei.chen02@xjtlu.edu.cn:
+      email: wei.chen02@xjtlu.edu.cn
+      name: Wei Chen
+      password: $2b$12$AlADSwlyMzXoY68A744ILeSTQjrdbP.pq4q0dvGNecg92HjynFfxO
+    charles.curry@bisalloy.com.au:
+      email: charles.curry@bisalloy.com.au
+      name: Charles Curry
+      password: $2b$12$iXrS1tN3Kx47KurWy7Mh2uE0oHyxxYhfj.Ht/yJ6lgU2IBSLDTz6q
+    dxx052@163.com:
+      email: dxx052@163.com
+      name: Xiangxian Deng
+      password: $2b$12$h/gNA02sQmXcSn1H7lcYJeMT/eislNHTvbjC/z18ePwNdK/YY77Da
+    lane.thomson@bisalloydigital.com:
+      email: lane.thomson@bisalloydigital.com
+      name: Lane Thomson
+      password: $2b$12$mLsTsohFsaWoSNeFcnQJLuJZX63xZv6HgMXE0ezKRFrbden1dlNjW            
+preauthorized:
+  emails:
+  - wei.chen@bisalloy.com.au

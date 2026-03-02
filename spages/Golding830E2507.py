@@ -490,3 +490,25 @@ def app():
         st.dataframe(latest_df, use_container_width=True)
     
     st.markdown("###")
+
+
+    st.markdown("_______________________________________________________")
+    footer = """  
+            <style>
+                .footer {
+                position: fixed;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                background-color: #50575b;
+                color: white;
+                text-align: center;
+                }
+            </style>
+
+            <div class="footer">
+                <p>© Copyright 2026 WearFusion, Bisalloy Digital Solutions Pty Limited</p>
+            </div>
+        """
+
+    st.markdown(footer,unsafe_allow_html=True)

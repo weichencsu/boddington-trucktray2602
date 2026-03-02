@@ -50,10 +50,29 @@ def get_latest_sensor_status(db_dict):
 def plot_sensor_data_from_dict(db_dict):
     """
     基于数据库字典绘制每个传感器的CurrentThickness随时间变化曲线，
-    并添加水平线标注InitialThickness。
+    并添加水平线标注InitialThickness，以及预定义的磨损阈值线。
     """
     fig = go.Figure()
     
+    # 定义阈值线和颜色
+    threshold_lines = [
+        (31, 'black'), (30, 'black'), (26, 'black'), (22, 'black'),
+        (18, 'blue'),
+        (14, 'orange'), (12, 'orange'),
+        (10, 'red')
+    ]
+    
+    # 添加全局阈值水平线（粗实线）
+    for y_val, color in threshold_lines:
+        fig.add_hline(
+            y=y_val,
+            line_color=color,
+            line_width=2,
+            line_dash="solid",
+            opacity=0.2
+        )
+    
+    # 处理每个传感器的数据
     for sheet_name, df in db_dict.items():
         if df.empty:
             continue
@@ -68,19 +87,29 @@ def plot_sensor_data_from_dict(db_dict):
             mode='lines+markers',
             name=f"{sheet_name} (Current)"
         ))
-        # 添加初始厚度水平线（取第一行的InitialThickness，假设恒定）
+        # 添加初始厚度水平线（取第一行的InitialThickness，虚线）
         init_val = df['InitialThickness'].iloc[0]
-        fig.add_hline(y=init_val, line_dash="dash", 
-                      annotation_text=f"{sheet_name} Init: {init_val}mm",
-                      annotation_position="top left")
+        fig.add_hline(
+            y=init_val,
+            line_dash="dash",
+            line_color="gray",
+            annotation_text=f"{sheet_name} Init: {init_val}mm",
+            annotation_position="top left"
+        )
     
-    fig.update_yaxes(title_text="Thickness (mm)")
+    # 设置坐标轴范围及标签
+    fig.update_yaxes(title_text="Thickness (mm)", range=[5, 35])
     fig.update_xaxes(title_text="Sensor Scan Time")
+    
     fig.update_layout(
+    # 添加边框设置
+        template='plotly_white',
+        
+        # 图表边框
         margin=dict(l=1, r=1, t=30, b=1),
-        template="seaborn",
-        legend=dict(orientation="h", yanchor="bottom", y=0.9, xanchor="right", x=1)
+        legend=dict(orientation="h", yanchor="bottom", y=0.99, xanchor="right", x=1),
     )
+
     return fig
 
 def downloadData(file_path):
@@ -126,7 +155,7 @@ def downloadData(file_path):
                 data=output.getvalue(),
                 file_name=file_path,
                 mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                use_container_width = True
+                width='stretch'
             )
             
             st.success("Sensor database available. Please click button to download!!!")    
@@ -159,7 +188,7 @@ def app():
     Tray1, Tray2 = st.tabs(["LinerLess Tray w/ Passive Wear Sensor", "Future Trials"])
     
     with Tray1:
-        st.image("pwsTray.png", caption="Linerless Tray Passive Wear Sensor Install Locations", use_container_width=True)
+        st.image("pwsTray.png", caption="Linerless Tray Passive Wear Sensor Install Locations", width='stretch')
     
     # 您之前设计的HTML代码（已包含所有样式和动画）
     html_code = """
@@ -477,7 +506,7 @@ def app():
         st.markdown("###")
         st.markdown("3. Wear Sensor Plots")
         fig = plot_sensor_data_from_dict(db_dict)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig)
         
         # 下载数据库按钮（需调整downloadData以适配新列名，此处暂不调用）
         # data download function
@@ -487,7 +516,7 @@ def app():
     with Tray2_sensor:
         # 显示最新读数文件内容表格
         st.markdown("Latest Readings from pwsReadingsLatest.xlsx")
-        st.dataframe(latest_df, use_container_width=True)
+        st.dataframe(latest_df, width='stretch')
     
     st.markdown("###")
 

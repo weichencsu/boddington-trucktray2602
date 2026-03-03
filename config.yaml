@@ -24,6 +24,18 @@ credentials:
       email: lane.thomson@bisalloydigital.com
       name: Lane Thomson
       password: $2b$12$mLsTsohFsaWoSNeFcnQJLuJZX63xZv6HgMXE0ezKRFrbden1dlNjW            
+    melinda.yeo@schlam.com:
+      email: melinda.yeo@schlam.com
+      name: Melinda Yeo
+      password: $2b$12$ILeRy6AKOXzUxTVB5bIOu.QS0XjAyxI0N1fqBcUrOcLdfManHv1lK   
+    tom.smith@schlam.com:
+      email: tom.smith@schlam.com
+      name: Tom Smith
+      password: $2b$12$DFkZUls84KWOtXHKrNbNMOTLraiNCk62b3zTJxaMZNMIadAOAd7dS   
+    rob.jennings@schlam.com:
+      email: rob.jennings@schlam.com
+      name: Rob Jennings
+      password: $2b$12$UCPdAPCpByoTyG0TkGi6CuAN91mglCWkWnfpndshswBewyTOrCBB.   
 preauthorized:
   emails:
   - wei.chen@bisalloy.com.au

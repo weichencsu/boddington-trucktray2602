@@ -454,8 +454,8 @@ def app():
         for row in sensor_status_df.itertuples():
             sensor_name = row.sensorName
             latest_time = row.latestTime
-            total_len = row.totalLength
-            actual_len = row.actualLength
+            total_len = row.totalLength + 1  # 加1mm作为初始厚度的容差
+            actual_len = row.actualLength + 1  # 加1mm作为当前厚度的容差
 
             # 显示metric
             if pd.notna(total_len):

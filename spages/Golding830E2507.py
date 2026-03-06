@@ -83,7 +83,7 @@ def plot_sensor_data_from_dict(db_dict):
         # 添加当前厚度曲线
         fig.add_trace(go.Scatter(
             x=df['SensorScanTime'],
-            y=df['CurrentThickness'],
+            y=df['CurrentThickness']+1,  # 加1mm作为当前厚度的容差
             mode='lines+markers',
             name=f"{sheet_name} (Current)"
         ))
@@ -93,7 +93,7 @@ def plot_sensor_data_from_dict(db_dict):
             y=init_val,
             line_dash="dash",
             line_color="gray",
-            annotation_text=f"{sheet_name} Init: {init_val}mm",
+            annotation_text=f"{sheet_name} Init: {init_val+1}mm",
             annotation_position="top left"
         )
     

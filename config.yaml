@@ -35,7 +35,11 @@ credentials:
     rob.jennings@schlam.com:
       email: rob.jennings@schlam.com
       name: Rob Jennings
-      password: $2b$12$UCPdAPCpByoTyG0TkGi6CuAN91mglCWkWnfpndshswBewyTOrCBB.   
+      password: $2b$12$UCPdAPCpByoTyG0TkGi6CuAN91mglCWkWnfpndshswBewyTOrCBB. 
+    emily.gallarde@schlam.com:
+      email: emily.gallarde@schlam.com
+      name: Emily Gallarde
+      password: $2b$12$yP7T8cdSORNA98t4l7eQ4.EmT0eShn/HgKmPCC3AFHieMk002tvHy   
 preauthorized:
   emails:
   - wei.chen@bisalloy.com.au
